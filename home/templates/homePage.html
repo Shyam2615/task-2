@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="main d-flex mx-auto justify-content-center align-items-center">
+    <div class="card mx-5 cards shadow-lg" style="width: 18rem;">
+        <img class="image" src="/media/images/doctor.webp" class="card-img-top" alt="Doctor">
+        <div class="card-body">
+          <h5 class="card-title d-flex align-items-center justify-content-center fw-bold">Doctor</h5>
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <a href="/register/?user=doctor" class="btn btn-danger button my-1">Register</a>
+          <a href="/login/?user=doctor" class="btn btn-success button my-1">Login</a>
+        </div>
+        </div>
+      </div>
+
+    <div class="card mx-5 cards shadow-lg" style="width: 18rem;">
+        <img src="/media/images/patient.png" class="card-img-top" alt="Patient">
+        <div class="card-body">
+          <h5 class="card-title d-flex align-items-center justify-content-center fw-bold">Patient</h5>
+          <div class="d-flex flex-column justify-content-between align-items-center">
+              <a button href="/register/?user=patient" class="btn btn-danger button  my-1">Register</a>
+            <a href="/login/?user=patient" class="btn btn-success button  my-1">Login</a>
+          </div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

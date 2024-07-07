@@ -1,0 +1,17 @@
+.main{
+    background-color: grey;
+    height: 100vh;
+    width: 100%;
+}
+
+.button{
+    width: 100%;
+}
+
+.cards{
+    height: 455px;
+}
+
+.signup-btn{
+    width: 100%;
+}

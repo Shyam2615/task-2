@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block start %}
+
+
+<div class="heading d-flex justify-content-center mt-4">
+    <h2>Login as {{user_type}}</h2>
+  </div>
+  
+
+<div class="container mx-auto card shadow-lg mt-5 mb-5">
+    <form class="row g-3" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if messages %}
+        {{ message.tags }}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="mb-3 mt-5">
+            <label for="formGroupExampleInput" class="form-label fw-bold">Username</label>
+            <input name="username" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Username">
+        </div>
+        <div class="mb-3 mb-2">
+            <label for="formGroupExampleInput2" class="form-label fw-bold">Password</label>
+            <input name="password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Enter Password">
+        </div>
+        <div class="col-12 mb-5">
+            <button type="submit" class="btn btn-warning signup-btn fw-bold">Login</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
