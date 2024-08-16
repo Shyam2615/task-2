@@ -5,6 +5,7 @@ from django.contrib.auth import login
 from .models import *
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
 
 # Create your views here.
 
@@ -128,3 +129,66 @@ def dashboard(request):
         }
 
     return render(request, 'dashboard.html', context)
+
+def blog(request):
+    user = request.user
+    isDoctor = user.user_type
+    print("User", isDoctor)
+
+    blogs = Blog.objects.all()
+
+    if isDoctor == 'doctor':
+        return render(request, "blog.html", context={"isDoctor":isDoctor, "blogs":blogs})
+        
+    return render(request, "blog.html", context={"blogs":blogs})
+
+def create_blog(request):
+
+    if request.method == "POST":
+        Title = request.POST.get('Title')
+        Image = request.FILES.get('blog-img')
+        Category = request.POST.get('category')    
+        Summary = request.POST.get('summary')    
+        Content = request.POST.get('content') 
+
+        action = request.POST.get('action')
+
+        print(Category) 
+
+        try:
+            blog = Blog.objects.create(
+                user = request.user,
+                Title = Title,
+                Image = Image,
+                Category = Category,
+                Summary = Summary,
+                Content = Content,
+            )
+
+            if action == "save_draft":
+                Drafts.objects.create(draft = blog)
+
+        except Exception as e:
+            messages.error(request, f"Error: {e}")
+            return redirect('/create-blog')
+                    
+                
+
+    return render(request, "create_blog.html")
+
+def drafts_page(request):
+
+    drafts = Drafts.objects.filter(draft__user=request.user)
+
+    return render(request, "drafts.html", context={"drafts":drafts})
+
+def upload_post(request, draft_id):
+    draft = get_object_or_404(Drafts, id=draft_id)
+    blog_post = draft.draft
+    draft.delete()  
+    return redirect(blog)
+
+def delete_post(request, draft_id):
+    draft = get_object_or_404(Drafts, id=draft_id)
+    draft.delete()  
+    return redirect(blog) 

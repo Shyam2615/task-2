@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block start %}
+
+<nav class="navbar bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand navName">Navbar</a>
+      <div class="createPost">
+        <a class="btn btn-outline-primary" href="/blog">Go back</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="blogs mt-2 container">
+    {% for draft in drafts %}
+    {% if draft %}
+    <div class="card mb-3">
+        <h5 class="card-title mx-auto fw-bold my-1">{{ draft.draft.Title }}</h5>
+        <img class="mx-auto" src="{{ draft.draft.Image.url }}" class="card-img-top" alt="..." style="width: 900px; height: 300px;">
+        <div class="card-body">
+            <p class="card-text"><small class="text-body-secondary">{{ draft.draft.Category }}</small></p>
+            <p class="card-text fw-bold">Summary:</p>
+            <summary class="card-text mx-3">{{ draft.draft.Summary|truncate_summary }}</summary>
+            <p class="card-text mt-1 fw-bold">Content:</p>
+            <p class="card-text">{{ draft.draft.Content }}</p>
+            <div class="d-flex">
+                <form method="post" action="{% url 'upload_post' draft.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary me-2">Upload</button>
+                </form>
+                <form method="post" action="{% url 'delete_post' draft.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No drafts found.</p>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+{% endblock %}

@@ -35,3 +35,14 @@ class Patient(models.Model):
 
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class Blog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    Title = models.CharField(max_length=50)
+    Image = models.ImageField(upload_to='blogs')
+    Category = models.CharField(max_length=50)
+    Summary = models.TextField()
+    Content = models.TextField()
+
+class Drafts(models.Model):
+    draft = models.ForeignKey(Blog, on_delete=models.CASCADE)

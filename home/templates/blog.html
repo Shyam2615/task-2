@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% block start %}
+
+<nav class="navbar bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand navName">Navbar</a>
+      {% if isDoctor %}
+      <div class="createPost">
+        <a class="btn btn-outline-primary" href="/create-blog">Create new post</a>
+        <a class="btn btn-outline-danger" href="/drafts">Show Drafts</a>
+      </div>
+      {% endif %}
+      <div class="createPost">
+        <a class="btn btn-outline-info" href="/">Go back</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="blogs mt-2 container">
+    {% for blog in blogs %}
+    <div class="card mb-3">
+        <h5 class="card-title mx-auto fw-bold my-1">{{blog.Title}}</h5>
+        <img class="mx-auto" src="{{blog.Image.url}}" class="card-img-top" alt="..." style="width: 900px; height: 300px;">
+        <div class="card-body">
+          <p class="card-text"><small class="text-body-secondary">{{blog.Category}}</small></p>
+          <p class="card-text fw-bold">Summary:</p>
+          <summary class="card-text mx-3">{{ blog.Summary|truncate_summary }}</summary>
+          <p class="card-text mt-1 fw-bold">Content:</p>
+          <p class="card-text">{{blog.Content}}</p>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+
+{% endblock %}
